@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+import NavBar from "@/components/navigation/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,9 +33,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} ${spaceGrotesk.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={cn("antialiased", inter.className, spaceGrotesk.variable)}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NavBar />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
